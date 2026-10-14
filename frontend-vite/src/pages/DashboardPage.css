@@ -1,0 +1,426 @@
+.student-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.dashboard-top-actions,
+.dashboard-section-heading,
+.dashboard-section-heading > div,
+.dashboard-list-item,
+.application-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.dashboard-top-actions {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.dashboard-welcome {
+    padding: clamp(24px, 5vw, 40px);
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(115deg, #173b70, #2868a9);
+    box-shadow: var(--card-shadow);
+}
+
+.dashboard-welcome .hero-eyebrow {
+    color: #c5dcff;
+    margin-bottom: 12px;
+}
+
+.dashboard-welcome h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 5vw, 2.7rem);
+}
+
+.dashboard-welcome p:last-child {
+    margin: 10px 0 0;
+    color: #e7effa;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.dashboard-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+    box-shadow: var(--card-shadow);
+}
+
+.dashboard-stat-card:hover {
+    border-color: #7ca5d9;
+}
+
+.dashboard-stat-label,
+.dashboard-stat-detail {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.dashboard-stat-card strong {
+    color: var(--heading);
+    font-size: 1.8rem;
+}
+
+.profile-prompt,
+.dashboard-section-error,
+.dashboard-global-error {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid #b7d5f4;
+    border-radius: 10px;
+    color: var(--text);
+    background: var(--soft-hover);
+}
+
+.profile-prompt span {
+    color: var(--muted);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.8fr);
+    align-items: start;
+    gap: 22px;
+}
+
+.dashboard-main-column,
+.dashboard-side-column {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-section,
+.dashboard-profile-card {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+}
+
+.dashboard-section-heading {
+    margin-bottom: 16px;
+}
+
+.dashboard-section-heading > div {
+    justify-content: flex-start;
+}
+
+.dashboard-section-heading h2,
+.dashboard-profile-card h2 {
+    margin: 0;
+    color: var(--heading);
+    font-size: 1.2rem;
+}
+
+.dashboard-section-heading > div > span {
+    min-width: 26px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    color: var(--heading);
+    background: var(--soft-hover);
+    font-size: 12px;
+    text-align: center;
+}
+
+.dashboard-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.recommended-card-wrap {
+    min-width: 0;
+}
+
+.recommendation-reason {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.recommended-card-wrap .discovery-card {
+    height: 100%;
+    padding: 18px;
+}
+
+.recommended-card-wrap .card-management-actions {
+    display: none;
+}
+
+.dashboard-item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dashboard-list-item {
+    min-width: 0;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+}
+
+.dashboard-list-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.dashboard-list-item > div:first-child {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dashboard-list-item a {
+    color: var(--heading);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.dashboard-list-item a:hover {
+    text-decoration: underline;
+}
+
+.dashboard-list-item span,
+.dashboard-empty {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.dashboard-empty {
+    margin: 0;
+}
+
+.application-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.application-status,
+.days-left {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.application-status-draft {
+    color: #344054;
+    background: #f2f4f7;
+}
+
+.application-status-submitted {
+    color: #174ea6;
+    background: #e8f0fe;
+}
+
+.application-status-review {
+    color: #6941c6;
+    background: #f4ebff;
+}
+
+.application-status-shortlisted,
+.application-status-accepted {
+    color: #17633a;
+    background: #e8f7ed;
+}
+
+.application-status-rejected,
+.application-status-withdrawn {
+    color: #a12626;
+    background: #fdecec;
+}
+
+.days-left {
+    color: #245da8;
+    background: #eaf2fc;
+}
+
+.days-left-urgent {
+    color: #a12626;
+    background: #fdecec;
+}
+
+.dashboard-profile-card > p:not(.hero-eyebrow, .local-data-note) {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.dashboard-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.dashboard-profile-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dashboard-profile-form label span {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.dashboard-profile-form input,
+.dashboard-profile-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--field-text);
+    background: var(--field-bg);
+    font: inherit;
+}
+
+.dashboard-profile-form input:focus-visible,
+.dashboard-profile-form textarea:focus-visible,
+.dashboard-profile-form button:focus-visible,
+.dashboard-stat-card:focus-visible,
+.dashboard-top-actions button:focus-visible,
+.dashboard-section button:focus-visible,
+.save-opportunity-button:focus-visible {
+    outline: 3px solid #6ea8fe;
+    outline-offset: 2px;
+}
+
+.local-data-note {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.dashboard-skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.dashboard-skeleton-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 130px;
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+}
+
+.dashboard-skeleton-card span {
+    display: block;
+    height: 14px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--soft-hover), var(--border), var(--soft-hover));
+    background-size: 200% 100%;
+    animation: dashboard-skeleton-shimmer 1.3s infinite linear;
+}
+
+.dashboard-skeleton-card span:nth-child(2) {
+    width: 65%;
+    height: 28px;
+}
+
+.dashboard-skeleton-card span:nth-child(3) {
+    width: 82%;
+}
+
+.dashboard-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.dashboard-notice button {
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.dashboard-global-error {
+    border-color: #f3b5b5;
+    background: #fff6f6;
+}
+
+.clear-history-button {
+    margin-top: 14px;
+}
+
+@keyframes dashboard-skeleton-shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-side-column {
+        order: -1;
+    }
+}
+
+@media (max-width: 620px) {
+    .dashboard-stats,
+    .dashboard-card-grid,
+    .dashboard-skeleton-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-section {
+        padding: 17px;
+    }
+
+    .dashboard-list-item {
+        align-items: flex-start;
+    }
+
+    .application-list-item {
+        flex-direction: column;
+    }
+
+    .application-actions {
+        justify-content: flex-start;
+    }
+}

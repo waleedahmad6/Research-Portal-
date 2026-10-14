@@ -1,5 +1,38 @@
 const prisma = require("../config/prisma");
 
+const normalizeList = (value) => {
+    const values = Array.isArray(value)
+        ? value
+        : typeof value === "string"
+            ? value.split(",")
+            : [];
+
+    return [...new Set(values.map((item) => String(item).trim()).filter(Boolean))];
+};
+
+const opportunityDiscoveryFields = (body) => {
+    const skills = normalizeList(body.skills ?? body.required_skills);
+    const keywords = normalizeList(
+        body.keywords ?? [body.research_area, ...skills]
+    );
+    const mode = body.mode || "on-campus";
+
+    if (typeof (body.paid ?? false) !== "boolean") {
+        return { error: "Paid must be a boolean." };
+    }
+    if (!["remote", "on-campus"].includes(mode)) {
+        return { error: "Mode must be remote or on-campus." };
+    }
+
+    return {
+        paid: body.paid ?? false,
+        mode,
+        skills,
+        keywords,
+        requiredSkills: skills.join(", ")
+    };
+};
+
 const createOpportunity = async (req, res) => {
     try {
         const {
@@ -13,6 +46,11 @@ const createOpportunity = async (req, res) => {
             application_deadline,
             status
         } = req.body;
+        const discoveryFields = opportunityDiscoveryFields(req.body);
+
+        if (discoveryFields.error) {
+            return res.status(400).json({ message: discoveryFields.error });
+        }
 
         // Check required fields
         if (
@@ -60,7 +98,11 @@ const createOpportunity = async (req, res) => {
                 required_skills,
                 available_positions,
                 application_deadline,
-                status
+                status,
+                paid,
+                mode,
+                skills,
+                keywords
             )
             VALUES (
                 ${title},
@@ -68,10 +110,14 @@ const createOpportunity = async (req, res) => {
                 ${research_area},
                 ${faculty_name},
                 ${department},
-                ${required_skills},
+                ${discoveryFields.requiredSkills || required_skills},
                 ${available_positions},
                 CAST(${application_deadline} AS DATE),
-                ${opportunityStatus}
+                ${opportunityStatus},
+                ${discoveryFields.paid},
+                ${discoveryFields.mode},
+                CAST(${JSON.stringify(discoveryFields.skills)} AS JSONB),
+                CAST(${JSON.stringify(discoveryFields.keywords)} AS JSONB)
             )
             RETURNING *;
         `;
@@ -173,6 +219,11 @@ const updateOpportunity = async (req, res) => {
             application_deadline,
             status
         } = req.body;
+        const discoveryFields = opportunityDiscoveryFields(req.body);
+
+        if (discoveryFields.error) {
+            return res.status(400).json({ message: discoveryFields.error });
+        }
 
         // Check required fields
         if (
@@ -217,10 +268,14 @@ const updateOpportunity = async (req, res) => {
                 research_area = ${research_area},
                 faculty_name = ${faculty_name},
                 department = ${department},
-                required_skills = ${required_skills},
+                required_skills = ${discoveryFields.requiredSkills || required_skills},
                 available_positions = ${available_positions},
                 application_deadline = CAST(${application_deadline} AS DATE),
-                status = ${status}
+                status = ${status},
+                paid = ${discoveryFields.paid},
+                mode = ${discoveryFields.mode},
+                skills = CAST(${JSON.stringify(discoveryFields.skills)} AS JSONB),
+                keywords = CAST(${JSON.stringify(discoveryFields.keywords)} AS JSONB)
             WHERE id = ${Number(id)}
             RETURNING *
         `;

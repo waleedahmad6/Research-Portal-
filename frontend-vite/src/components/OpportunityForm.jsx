@@ -21,6 +21,8 @@ const initialForm = {
     required_skills: "",
     available_positions: "1",
     application_deadline: "",
+    paid: false,
+    mode: "on-campus",
     status: "Open"
 };
 
@@ -48,7 +50,12 @@ function OpportunityForm() {
                 const opportunity = response.data.opportunity;
                 setFormData({
                     ...opportunity,
+                    required_skills: Array.isArray(opportunity.required_skills)
+                        ? opportunity.required_skills.join(", ")
+                        : opportunity.required_skills,
                     available_positions: String(opportunity.available_positions),
+                    paid: Boolean(opportunity.paid),
+                    mode: opportunity.mode || "on-campus",
                     application_deadline: String(
                         opportunity.application_deadline
                     ).slice(0, 10)
@@ -88,8 +95,14 @@ function OpportunityForm() {
         setError("");
 
         try {
+            const skills = formData.required_skills
+                .split(",")
+                .map((skill) => skill.trim())
+                .filter(Boolean);
             const data = {
                 ...formData,
+                skills,
+                keywords: [formData.research_area, ...skills].filter(Boolean),
                 available_positions: Number(
                     formData.available_positions
                 )
@@ -264,6 +277,36 @@ function OpportunityForm() {
                             <option value="Closed">Closed</option>
                         </select>
                     </div>
+
+                    <div className="form-group">
+                        <label htmlFor="mode">Work arrangement</label>
+                        <select
+                            id="mode"
+                            name="mode"
+                            value={formData.mode}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="on-campus">On-campus</option>
+                            <option value="remote">Remote</option>
+                        </select>
+                    </div>
+
+                    <label className="checkbox-form-group">
+                        <input
+                            id="paid"
+                            name="paid"
+                            type="checkbox"
+                            checked={formData.paid}
+                            onChange={(event) =>
+                                setFormData({
+                                    ...formData,
+                                    paid: event.target.checked
+                                })
+                            }
+                        />
+                        <span>Paid research opportunity</span>
+                    </label>
                 </div>
 
                 <div className="form-actions">
