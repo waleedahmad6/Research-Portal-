@@ -1,0 +1,133 @@
+{
+  "info": {
+    "name": "Research Portal API",
+    "description": "Requests for the Research Portal Express API. Start the backend locally before sending requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "opportunityId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "API status",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/test"
+          },
+          "response": []
+        },
+        {
+          "name": "Database status",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/db"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Opportunities",
+      "item": [
+        {
+          "name": "List opportunities",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/opportunities/all"
+          },
+          "response": []
+        },
+        {
+          "name": "Get opportunity by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/opportunities/{{opportunityId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Create opportunity",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.opportunity && response.opportunity.id !== undefined) {",
+                  "        pm.collectionVariables.set(\"opportunityId\", response.opportunity.id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"AI Research Assistant\",\n  \"description\": \"Help investigate machine learning applications.\",\n  \"research_area\": \"Artificial Intelligence\",\n  \"faculty_name\": \"Dr. Jane Smith\",\n  \"department\": \"Computer Science\",\n  \"required_skills\": \"Python, machine learning\",\n  \"available_positions\": 2,\n  \"application_deadline\": \"2026-12-31\",\n  \"status\": \"Open\",\n  \"paid\": false,\n  \"mode\": \"on-campus\",\n  \"keywords\": [\"artificial intelligence\", \"machine learning\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/opportunities/create"
+          },
+          "response": []
+        },
+        {
+          "name": "Update opportunity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"AI Research Assistant\",\n  \"description\": \"Help investigate machine learning applications.\",\n  \"research_area\": \"Artificial Intelligence\",\n  \"faculty_name\": \"Dr. Jane Smith\",\n  \"department\": \"Computer Science\",\n  \"required_skills\": \"Python, machine learning\",\n  \"available_positions\": 2,\n  \"application_deadline\": \"2026-12-31\",\n  \"status\": \"Open\",\n  \"paid\": false,\n  \"mode\": \"on-campus\",\n  \"keywords\": [\"artificial intelligence\", \"machine learning\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/opportunities/update/{{opportunityId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete opportunity",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/opportunities/{{opportunityId}}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

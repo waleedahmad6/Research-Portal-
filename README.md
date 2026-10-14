@@ -17,6 +17,19 @@ development with automatic restarts, use `npm run dev` instead.
 The server listens on port `5000` by default. Set the `PORT` environment variable
 to use a different port. `GET /api/health/db` checks the database connection.
 
+### Database setup and API collection
+
+The Prisma schema is in `backend/prisma/schema.prisma`. For an existing
+PostgreSQL database, apply the discovery-field migration described below before
+using the opportunity discovery fields.
+
+The Postman collection is in
+`postman/Research Portal.postman_collection.json`. Import it into Postman to
+run the health checks and opportunity CRUD requests against the local API. Its
+`baseUrl` collection variable defaults to `http://localhost:5000/api`; the
+`opportunityId` variable is updated automatically after a successful create
+request.
+
 ## Frontend
 
 The React application is in `frontend-vite/` (the sole active frontend). Start
